@@ -91,7 +91,7 @@ function get_addons_autoload_config($truncate = false)
     }
 
     foreach ($orderedAddons as $name => $addon) {
-        if (!$addon['state']) {
+        if (!$addon['status']) {
             continue;
         }
 
@@ -397,7 +397,7 @@ function enable_addons($name)
     if (!isset($info['name'])) {
         throw new Exception("插件不存在");
     }
-    $info['state'] = 1;
+    $info['status'] = 1;
     set_addons_info($name, $info);
     $config = get_addons_autoload_config(true);
     if (!file_put_contents(app()->getRootPath() . 'config' . DIRECTORY_SEPARATOR . 'addons.php', "<?php\n\n" . "return " . VarExporter::export($config) . ";\n", LOCK_EX)) {
@@ -419,7 +419,7 @@ function disable_addons($name)
     if (!isset($info['name'])) {
         throw new Exception("插件不存在");
     }
-    $info['state'] = 0;
+    $info['status'] = 0;
     set_addons_info($name, $info);
     $config = get_addons_autoload_config(true);
     if (!file_put_contents(app()->getRootPath() . 'config' . DIRECTORY_SEPARATOR . 'addons.php', "<?php\n\n" . "return " . VarExporter::export($config) . ";\n", LOCK_EX)) {
